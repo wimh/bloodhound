@@ -1,0 +1,36 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant::Config.run do |config|
+
+  # Every Vagrant virtual environment requires a box to build off of.
+  config.vm.box = "wheezy64u"
+  #config.vm.box = "debianwheezy"
+  #config.vm.box_url = "https://downloads.sourceforge.net/project/vagrantdebianboxes/debianwheezy.box?r=&ts=1374688209&use_mirror=heanet"
+  
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  #config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. 
+  config.vm.forward_port 8080, 8080
+  config.vm.forward_port 80, 8000
+
+  config.vm.share_folder "bloodhound", "/bloodhound", "../.."
+
+  # Enable provisioning with Puppet stand alone.  Puppet manifests
+  # are contained in a directory path relative to this Vagrantfile.
+  # You will need to create the manifests directory and a manifest in
+  # the file default.pp in the manifests_path directory.
+  #
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = "puppet/manifests"
+    puppet.module_path = 'puppet/modules'
+    puppet.manifest_file  = "site.pp"
+    puppet.options = ["--templatedir", "/vagrant/puppet/templates"]
+    #puppet.options="--verbose --debug"
+  end
+
+end

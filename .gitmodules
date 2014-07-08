@@ -1,0 +1,12 @@
+[submodule "installer/vagrant.puppet/puppet/modules/apache"]
+	path = installer/vagrant.puppet/puppet/modules/apache
+	url = https://github.com/puppetlabs/puppetlabs-apache
+[submodule "installer/vagrant.puppet/puppet/modules/stdlib"]
+	path = installer/vagrant.puppet/puppet/modules/stdlib
+	url = https://github.com/puppetlabs/puppetlabs-stdlib
+[submodule "installer/vagrant.puppet/puppet/modules/python"]
+	path = installer/vagrant.puppet/puppet/modules/python
+	url = https://github.com/stankevich/puppet-python.git
+[submodule "installer/vagrant.puppet/puppet/modules/concat"]
+	path = installer/vagrant.puppet/puppet/modules/concat
+	url = https://github.com/puppetlabs/puppetlabs-concat
