@@ -7,3 +7,4 @@
 .svn
 installer/bloodhound
 .vagrant
+.*.swp

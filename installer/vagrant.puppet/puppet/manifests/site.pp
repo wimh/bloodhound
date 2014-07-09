@@ -1,23 +1,15 @@
+# location of bloodhound source root directory
+$bhsrc="/bloodhound"
 
 $bhroot="/opt/bloodhound"
 $bhenvironments="${bhroot}/environments"
 $bhvirtualenv="${bhroot}/python-virtualenv"
 $bhwww="${bhroot}/www"
 
-$bhsrc="/bloodhound"
-#$bhsrc="${bhroot}/src"
-
 $username='bloodhound'
 
 $mainenvironment='main'
 $defaultproductprefix='@'
-
-exec { 'localapt':
-  command => "sed -i  's/us\\./nl./' /etc/apt/sources.list",
-  path    => "/usr/bin:/usr/sbin:/bin",
-  onlyif  => "/bin/grep -q 'us\\.' '/etc/apt/sources.list'",
-  notify  => Exec["apt-get update"],
-}
 
 exec { 'apt-get update':
   path => '/usr/bin',
@@ -31,41 +23,11 @@ package { ['vim', 'curl', 'nmap', 'python-psycopg2', 'subversion', 'libapache2-m
 }
 
 
-file { "${bhroot}":
-  ensure => 'directory',
+# avoid owner changing to root causing rerun of pip each time it is provisioned
+file { "${bhsrc}/installer/requirements.txt":
+  ensure  => present,
+  replace => false,
 }
-
-# vagrant shares bloodhound directory as /bloodhound.
-# we can use it directly or copy it to somewhere else first
-if $bhsrc != '/bloodhound' {
-
-  file { "${bhsrc}":
-    ensure => 'directory',
-    source  => '/bloodhound',
-    recurse => true,
-    require => File["${bhroot}"],
-  }
-
-  # separate define requirements.txt to avoid it gets overwritten by python::virtualenv
-  # https://github.com/stankevich/puppet-python/issues/64
-  file { "${bhsrc}/installer/requirements.txt":
-    ensure  => present,
-    source  => '/bloodhound/installer/requirements.txt',
-    require => File["${bhsrc}"],
-  }
-
-  File["${bhsrc}/installer/requirements.txt"] -> Python::Virtualenv["${bhvirtualenv}"]
-} 
-else {
-
-  # avoid owner changing to root causing rerun of pip each time it is provisioned
-  file { "${bhsrc}/installer/requirements.txt":
-    ensure  => present,
-    replace => false,
-  }
-
-}
-
 
 class { 'python':
   version    => 'system',
