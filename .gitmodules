@@ -10,3 +10,6 @@
 [submodule "installer/vagrant.puppet/puppet/modules/concat"]
 	path = installer/vagrant.puppet/puppet/modules/concat
 	url = https://github.com/puppetlabs/puppetlabs-concat
+[submodule "installer/vagrant.puppet/puppet/modules/postgresql"]
+	path = installer/vagrant.puppet/puppet/modules/postgresql
+	url = https://github.com/puppetlabs/puppetlabs-postgresql.git

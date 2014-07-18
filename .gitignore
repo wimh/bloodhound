@@ -8,3 +8,4 @@
 installer/bloodhound
 .vagrant
 .*.swp
+.*.tmp
