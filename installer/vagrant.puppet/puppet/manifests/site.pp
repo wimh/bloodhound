@@ -105,7 +105,7 @@ python::virtualenv { $bhvirtualenv:
   ensure       => present,
   venv_dir     => $bhvirtualenv,
   requirements => $tempreqfile,
-  owner        => $linuxuser,
+  #owner        => $linuxuser,
   group        => $apache::params::group,
   cwd          => $bhinstaller,
   require      => File[$bhroot],
